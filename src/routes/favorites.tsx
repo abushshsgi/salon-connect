@@ -5,6 +5,7 @@ import { salons } from "@/lib/mock-data";
 import { PageHeader } from "@/components/PageHeader";
 import { SalonCard } from "@/components/SalonCard";
 import { EmptyState } from "@/components/EmptyState";
+import { useFavorites } from "@/hooks/use-favorites";
 
 export const Route = createFileRoute("/favorites")({
   head: () => ({ meta: [{ title: "Sevimlilar — mysaloon.uz" }] }),
@@ -13,7 +14,8 @@ export const Route = createFileRoute("/favorites")({
 
 function Favorites() {
   const { t } = useTranslation();
-  const favs = salons.slice(0, 2);
+  const { ids } = useFavorites();
+  const favs = ids.length > 0 ? salons.filter((s) => ids.includes(s.id)) : [];
 
   return (
     <div>

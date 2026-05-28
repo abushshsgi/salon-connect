@@ -36,16 +36,16 @@ function ChatThread() {
     <div className="flex min-h-[100dvh] flex-col">
       <PageHeader
         showBack
-        title={thread.barberName}
         sticky
-        right={
-          <div className="grid h-10 w-10 place-items-center rounded-full bg-foreground text-sm font-bold text-background">
-            {thread.barberName.split(" ").map((n) => n[0]).join("")}
-          </div>
-        }
+        title={thread.barberName}
       />
+      <div className="-mt-2 px-5 pb-2">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+          {thread.salonName}
+        </p>
+      </div>
 
-      <div className="flex-1 space-y-3 px-4 py-4">
+      <div className="flex-1 space-y-2 px-4 py-4">
         {messages.map((m) => (
           <div
             key={m.id}
@@ -59,7 +59,7 @@ function ChatThread() {
                   : "bg-surface text-foreground rounded-bl-md",
               )}
             >
-              <p className="text-sm font-medium">{m.text}</p>
+              <p className="text-sm font-medium leading-snug">{m.text}</p>
               <p
                 className={cn(
                   "mt-1 text-[10px] font-bold",
@@ -92,7 +92,7 @@ function ChatThread() {
               "grid h-12 w-12 shrink-0 place-items-center rounded-full transition-all",
               input.trim()
                 ? "bg-foreground text-background active:scale-95"
-                : "bg-surface-2 text-muted-foreground",
+                : "bg-surface text-muted-foreground",
             )}
           >
             <Send className="h-4 w-4" />

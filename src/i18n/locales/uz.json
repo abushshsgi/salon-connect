@@ -7,6 +7,11 @@
     "notifications": "Xabar",
     "profile": "Profil"
   },
+  "audience": {
+    "all": "Hammasi",
+    "men": "Erkaklar",
+    "women": "Ayollar"
+  },
   "common": {
     "search": "Salonlar va ustalarni izlang",
     "all": "Barchasi",
@@ -23,7 +28,7 @@
     "empty": "Hozircha bo'sh"
   },
   "home": {
-    "greeting": "Assalomu alaykum",
+    "title": "Ko'rinishingizni bugun yangilang",
     "nearby": "Yaqin atrofdagi salonlar",
     "categories": {
       "all": "Barchasi",
@@ -33,11 +38,7 @@
       "spa": "Spa"
     }
   },
-  "map": {
-    "salons": "Salonlar",
-    "barbers": "Ustalar",
-    "radius": "Radius"
-  },
+  "map": { "salons": "Salonlar", "barbers": "Ustalar", "radius": "Radius" },
   "salon": {
     "tabs": {
       "about": "Haqida",
@@ -92,6 +93,9 @@
     "bookings": "Buyurtmalar",
     "reviews": "Sharhlar",
     "favorites": "Sevimlilar",
+    "offers": "Aksiyalar",
+    "loyalty": "Bonus dasturi",
+    "giftcard": "Sovg'a karta",
     "editProfile": "Profilni tahrirlash",
     "settings": "Sozlamalar",
     "language": "Til",

@@ -13,9 +13,13 @@ import { Route as SupportRouteImport } from './routes/support'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as OffersRouteImport } from './routes/offers'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MapRouteImport } from './routes/map'
+import { Route as LoyaltyRouteImport } from './routes/loyalty'
+import { Route as GiftcardRouteImport } from './routes/giftcard'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -45,6 +49,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OffersRoute = OffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotificationsRoute = NotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
@@ -55,9 +64,24 @@ const MapRoute = MapRouteImport.update({
   path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoyaltyRoute = LoyaltyRouteImport.update({
+  id: '/loyalty',
+  path: '/loyalty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GiftcardRoute = GiftcardRouteImport.update({
+  id: '/giftcard',
+  path: '/giftcard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatRoute = ChatRouteImport.update({
@@ -106,9 +130,13 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
   '/chat': typeof ChatRouteWithChildren
+  '/explore': typeof ExploreRoute
   '/favorites': typeof FavoritesRoute
+  '/giftcard': typeof GiftcardRoute
+  '/loyalty': typeof LoyaltyRoute
   '/map': typeof MapRoute
   '/notifications': typeof NotificationsRoute
+  '/offers': typeof OffersRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
@@ -123,9 +151,13 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
   '/chat': typeof ChatRouteWithChildren
+  '/explore': typeof ExploreRoute
   '/favorites': typeof FavoritesRoute
+  '/giftcard': typeof GiftcardRoute
+  '/loyalty': typeof LoyaltyRoute
   '/map': typeof MapRoute
   '/notifications': typeof NotificationsRoute
+  '/offers': typeof OffersRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
@@ -141,9 +173,13 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
   '/chat': typeof ChatRouteWithChildren
+  '/explore': typeof ExploreRoute
   '/favorites': typeof FavoritesRoute
+  '/giftcard': typeof GiftcardRoute
+  '/loyalty': typeof LoyaltyRoute
   '/map': typeof MapRoute
   '/notifications': typeof NotificationsRoute
+  '/offers': typeof OffersRoute
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
@@ -160,9 +196,13 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bookings'
     | '/chat'
+    | '/explore'
     | '/favorites'
+    | '/giftcard'
+    | '/loyalty'
     | '/map'
     | '/notifications'
+    | '/offers'
     | '/privacy'
     | '/profile'
     | '/settings'
@@ -177,9 +217,13 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bookings'
     | '/chat'
+    | '/explore'
     | '/favorites'
+    | '/giftcard'
+    | '/loyalty'
     | '/map'
     | '/notifications'
+    | '/offers'
     | '/privacy'
     | '/profile'
     | '/settings'
@@ -194,9 +238,13 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bookings'
     | '/chat'
+    | '/explore'
     | '/favorites'
+    | '/giftcard'
+    | '/loyalty'
     | '/map'
     | '/notifications'
+    | '/offers'
     | '/privacy'
     | '/profile'
     | '/settings'
@@ -212,9 +260,13 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BookingsRoute: typeof BookingsRoute
   ChatRoute: typeof ChatRouteWithChildren
+  ExploreRoute: typeof ExploreRoute
   FavoritesRoute: typeof FavoritesRoute
+  GiftcardRoute: typeof GiftcardRoute
+  LoyaltyRoute: typeof LoyaltyRoute
   MapRoute: typeof MapRoute
   NotificationsRoute: typeof NotificationsRoute
+  OffersRoute: typeof OffersRoute
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   SettingsRoute: typeof SettingsRoute
@@ -254,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/offers': {
+      id: '/offers'
+      path: '/offers'
+      fullPath: '/offers'
+      preLoaderRoute: typeof OffersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notifications': {
       id: '/notifications'
       path: '/notifications'
@@ -268,11 +327,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/loyalty': {
+      id: '/loyalty'
+      path: '/loyalty'
+      fullPath: '/loyalty'
+      preLoaderRoute: typeof LoyaltyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/giftcard': {
+      id: '/giftcard'
+      path: '/giftcard'
+      fullPath: '/giftcard'
+      preLoaderRoute: typeof GiftcardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favorites': {
       id: '/favorites'
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chat': {
@@ -349,9 +429,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BookingsRoute: BookingsRoute,
   ChatRoute: ChatRouteWithChildren,
+  ExploreRoute: ExploreRoute,
   FavoritesRoute: FavoritesRoute,
+  GiftcardRoute: GiftcardRoute,
+  LoyaltyRoute: LoyaltyRoute,
   MapRoute: MapRoute,
   NotificationsRoute: NotificationsRoute,
+  OffersRoute: OffersRoute,
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   SettingsRoute: SettingsRoute,

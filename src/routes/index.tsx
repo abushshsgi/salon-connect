@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, MapPin, Star, ChevronRight, Bell } from "lucide-react";
+import { Search, ChevronRight, Bell, Sparkles, Tag, Gift } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { salons, userProfile, notifications } from "@/lib/mock-data";
+import { salons, notifications, trendingStyles, offers } from "@/lib/mock-data";
 import type { Category } from "@/lib/mock-data";
 import { SalonCard } from "@/components/SalonCard";
+import { AudienceSwitch } from "@/components/AudienceSwitch";
+import { useAudience, matchAudience } from "@/hooks/use-audience";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -30,31 +32,40 @@ const CATEGORIES: { key: Category | "all"; label: string }[] = [
 
 function Home() {
   const { t } = useTranslation();
+  const { audience } = useAudience();
   const [cat, setCat] = useState<Category | "all">("all");
   const [query, setQuery] = useState("");
   const unread = notifications.filter((n) => !n.read).length;
 
-  const firstName = userProfile.name.split(" ")[0];
   const filtered = salons.filter(
     (s) =>
       (cat === "all" || s.category === cat) &&
+      matchAudience(s.audience, audience) &&
       (query === "" || s.name.toLowerCase().includes(query.toLowerCase())),
+  );
+
+  const trending = trendingStyles.filter(
+    (x) => audience === "all" || x.audience === "unisex" || x.audience === audience,
+  );
+
+  const topOffer = offers.find(
+    (o) => audience === "all" || o.audience === "unisex" || o.audience === audience,
   );
 
   return (
     <div>
-      {/* Header */}
+      {/* Editorial header — no greeting */}
       <header
         className="px-5 pt-4 pb-3"
         style={{ paddingTop: "calc(env(safe-area-inset-top) + 16px)" }}
       >
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-              {t("home.greeting")}
+        <div className="flex items-start justify-between">
+          <div className="max-w-[280px]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-muted-foreground">
+              mysaloon.uz
             </p>
-            <h1 className="mt-0.5 text-2xl font-bold tracking-tight">
-              {firstName} 👋
+            <h1 className="mt-1 text-[26px] font-bold leading-[1.1] tracking-tight">
+              Ko'rinishingizni bugun yangilang
             </h1>
           </div>
           <div className="flex items-center gap-2">
@@ -73,13 +84,16 @@ function Home() {
               className="grid h-11 w-11 place-items-center overflow-hidden rounded-full bg-foreground text-background"
               aria-label="Profile"
             >
-              <span className="text-sm font-bold">
-                {firstName.slice(0, 1).toUpperCase()}
-              </span>
+              <span className="text-sm font-bold">A</span>
             </Link>
           </div>
         </div>
       </header>
+
+      {/* Audience switch */}
+      <div className="px-5 pt-2">
+        <AudienceSwitch />
+      </div>
 
       {/* Search */}
       <div className="px-5 pt-3">
@@ -105,9 +119,7 @@ function Home() {
               onClick={() => setCat(c.key)}
               className={cn(
                 "shrink-0 rounded-full px-4 py-2 text-[12px] font-bold tracking-wide transition-colors",
-                active
-                  ? "bg-foreground text-background"
-                  : "bg-surface text-foreground",
+                active ? "bg-foreground text-background" : "bg-surface text-foreground",
               )}
             >
               {c.label}
@@ -115,6 +127,87 @@ function Home() {
           );
         })}
       </div>
+
+      {/* Quick actions */}
+      <section className="mt-6 grid grid-cols-3 gap-2 px-5">
+        <Link
+          to="/explore"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <Sparkles className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Trend uslublar</span>
+        </Link>
+        <Link
+          to="/offers"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <Tag className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Aksiyalar</span>
+        </Link>
+        <Link
+          to="/giftcard"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <Gift className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Sovg'a karta</span>
+        </Link>
+      </section>
+
+      {/* Offer banner */}
+      {topOffer && (
+        <section className="mt-6 px-5">
+          <Link
+            to="/offers"
+            className="block overflow-hidden rounded-2xl bg-foreground p-5 text-background active:scale-[0.98] transition-transform"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-background/60">
+              Bugungi taklif
+            </p>
+            <div className="mt-2 flex items-end justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-lg font-bold leading-tight">{topOffer.title}</p>
+                <p className="mt-0.5 truncate text-xs font-medium text-background/70">
+                  {topOffer.salonName} · {topOffer.validUntil} gacha
+                </p>
+              </div>
+              <div className="shrink-0 rounded-full bg-background px-3 py-1.5 text-sm font-bold text-foreground">
+                −{topOffer.discountPct}%
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
+      {/* Trending styles */}
+      {trending.length > 0 && (
+        <section className="mt-8">
+          <div className="mb-4 flex items-end justify-between px-5">
+            <h2 className="text-lg font-bold tracking-tight">Trend uslublar</h2>
+            <Link
+              to="/explore"
+              className="flex items-center text-[12px] font-bold text-foreground"
+            >
+              Hammasi <ChevronRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="no-scrollbar flex gap-3 overflow-x-auto px-5">
+            {trending.map((s) => (
+              <div key={s.id} className="w-[140px] shrink-0">
+                <div
+                  className="aspect-[3/4] rounded-2xl"
+                  style={{
+                    background: `linear-gradient(135deg, oklch(0.82 0.03 ${(s.id.charCodeAt(1) * 30) % 360}), oklch(0.38 0.02 ${(s.id.charCodeAt(1) * 30 + 80) % 360}))`,
+                  }}
+                />
+                <p className="mt-2 text-[13px] font-bold leading-tight">{s.title}</p>
+                <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+                  {s.audience === "men" ? "Erkaklar" : s.audience === "women" ? "Ayollar" : "Universal"}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Nearby */}
       <section className="mt-8 px-5">
@@ -128,36 +221,20 @@ function Home() {
           </Link>
         </div>
 
-        <div className="space-y-5">
-          {filtered.map((s) => (
-            <SalonCard key={s.id} salon={s} />
-          ))}
-        </div>
-      </section>
-
-      {/* Mini map */}
-      <section className="mt-8 px-5">
-        <Link
-          to="/map"
-          className="relative block h-32 overflow-hidden rounded-2xl bg-surface"
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(45deg, transparent 48%, oklch(0.88 0.018 85) 49%, oklch(0.88 0.018 85) 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, oklch(0.88 0.018 85) 49%, oklch(0.88 0.018 85) 51%, transparent 52%)",
-              backgroundSize: "32px 32px",
-            }}
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex items-center gap-2 rounded-full bg-background px-4 py-2 shadow-lg">
-              <MapPin className="h-4 w-4" />
-              <span className="text-sm font-bold">{t("common.viewMap")}</span>
-            </div>
+        {filtered.length === 0 ? (
+          <div className="rounded-2xl bg-surface p-8 text-center">
+            <p className="text-sm font-bold">Mos salon topilmadi</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Filtr yoki auditoriyani o'zgartirib ko'ring
+            </p>
           </div>
-          <div className="absolute left-1/3 top-1/3 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground ring-4 ring-foreground/15 animate-pulse" />
-          <div className="absolute right-1/4 bottom-1/3 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground ring-4 ring-foreground/15" />
-        </Link>
+        ) : (
+          <div className="space-y-5">
+            {filtered.map((s) => (
+              <SalonCard key={s.id} salon={s} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Trust strip */}
@@ -177,8 +254,8 @@ function Home() {
           </div>
           <div>
             <p className="text-xl font-bold">4.9</p>
-            <p className="mt-1 flex items-center justify-center gap-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-              <Star className="h-3 w-3 fill-foreground" /> Reyting
+            <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              Reyting
             </p>
           </div>
         </div>

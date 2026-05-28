@@ -7,10 +7,14 @@ import {
   HelpCircle,
   Shield,
   LogOut,
+  Tag,
+  Sparkles,
+  Gift,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { bookings, salons, userProfile } from "@/lib/mock-data";
+import { bookings, salons, userProfile, loyaltyMock } from "@/lib/mock-data";
 import { PageHeader } from "@/components/PageHeader";
+import { useFavorites } from "@/hooks/use-favorites";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({ meta: [{ title: "Profil — mysaloon.uz" }] }),
@@ -19,11 +23,18 @@ export const Route = createFileRoute("/profile")({
 
 function Profile() {
   const { t } = useTranslation();
+  const { ids: favIds } = useFavorites();
 
   const stats = [
     { label: t("profile.bookings"), value: bookings.length, to: "/bookings" as const },
     { label: t("profile.reviews"), value: 8, to: "/bookings" as const },
-    { label: t("profile.favorites"), value: salons.length, to: "/favorites" as const },
+    { label: t("profile.favorites"), value: favIds.length || salons.length, to: "/favorites" as const },
+  ];
+
+  const quick = [
+    { icon: Sparkles, label: t("profile.loyalty"), to: "/loyalty" as const, hint: `${loyaltyMock.points} ball` },
+    { icon: Tag, label: t("profile.offers"), to: "/offers" as const },
+    { icon: Gift, label: t("profile.giftcard"), to: "/giftcard" as const },
   ];
 
   const menu = [
@@ -38,7 +49,6 @@ function Profile() {
     <div className="pb-8">
       <PageHeader title={t("profile.title")} />
 
-      {/* Profile card */}
       <div className="px-5">
         <div className="flex items-center gap-4">
           <div className="grid h-20 w-20 place-items-center rounded-full bg-foreground text-2xl font-bold text-background">
@@ -55,7 +65,6 @@ function Profile() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="mx-5 mt-6 grid grid-cols-3 overflow-hidden rounded-2xl border border-border">
         {stats.map((s, i) => (
           <Link
@@ -71,7 +80,28 @@ function Profile() {
         ))}
       </div>
 
-      {/* Menu */}
+      {/* Quick — new pages */}
+      <div className="mt-6 grid grid-cols-3 gap-2 px-5">
+        {quick.map((q) => {
+          const Icon = q.icon;
+          return (
+            <Link
+              key={q.label}
+              to={q.to}
+              className="flex flex-col items-start gap-2 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+            >
+              <Icon className="h-4 w-4" strokeWidth={2.4} />
+              <span className="text-[11px] font-bold leading-tight">{q.label}</span>
+              {q.hint && (
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  {q.hint}
+                </span>
+              )}
+            </Link>
+          );
+        })}
+      </div>
+
       <div className="mt-6 px-5">
         <div className="overflow-hidden rounded-2xl border border-border">
           {menu.map((m, i) => {
@@ -96,7 +126,6 @@ function Profile() {
         </div>
       </div>
 
-      {/* Logout */}
       <div className="mt-4 px-5">
         <Link
           to="/auth"

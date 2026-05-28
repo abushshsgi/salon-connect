@@ -7,6 +7,7 @@
     "notifications": "Inbox",
     "profile": "Profile"
   },
+  "audience": { "all": "All", "men": "Men", "women": "Women" },
   "common": {
     "search": "Search salons and barbers",
     "all": "All",
@@ -23,7 +24,7 @@
     "empty": "Nothing here yet"
   },
   "home": {
-    "greeting": "Hello",
+    "title": "Refresh your look today",
     "nearby": "Salons nearby",
     "categories": {
       "all": "All",
@@ -33,11 +34,7 @@
       "spa": "Spa"
     }
   },
-  "map": {
-    "salons": "Salons",
-    "barbers": "Barbers",
-    "radius": "Radius"
-  },
+  "map": { "salons": "Salons", "barbers": "Barbers", "radius": "Radius" },
   "salon": {
     "tabs": {
       "about": "About",
@@ -77,21 +74,16 @@
       "cancelled": "Cancelled"
     }
   },
-  "chat": {
-    "title": "Messages",
-    "placeholder": "Type a message...",
-    "empty": "No messages yet"
-  },
-  "notifications": {
-    "title": "Notifications",
-    "markAll": "Mark all as read",
-    "empty": "No notifications"
-  },
+  "chat": { "title": "Messages", "placeholder": "Type a message...", "empty": "No messages yet" },
+  "notifications": { "title": "Notifications", "markAll": "Mark all as read", "empty": "No notifications" },
   "profile": {
     "title": "Profile",
     "bookings": "Bookings",
     "reviews": "Reviews",
     "favorites": "Favorites",
+    "offers": "Offers",
+    "loyalty": "Loyalty",
+    "giftcard": "Gift card",
     "editProfile": "Edit profile",
     "settings": "Settings",
     "language": "Language",
@@ -106,10 +98,7 @@
     "language": "Language",
     "reset": "Reset to defaults"
   },
-  "favorites": {
-    "title": "Favorite salons",
-    "empty": "No favorites yet"
-  },
+  "favorites": { "title": "Favorite salons", "empty": "No favorites yet" },
   "auth": {
     "phone": "Phone number",
     "code": "Verification code",

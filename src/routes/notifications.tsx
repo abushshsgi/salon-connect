@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Bell, CalendarCheck, MessageSquare, Star } from "lucide-react";
+import { Bell, CalendarCheck, MessageSquare, Star, Tag } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { notifications as initial } from "@/lib/mock-data";
+import { notifications as initial, type Notification } from "@/lib/mock-data";
 import { PageHeader } from "@/components/PageHeader";
 import { EmptyState } from "@/components/EmptyState";
 import { cn } from "@/lib/utils";
@@ -12,11 +12,12 @@ export const Route = createFileRoute("/notifications")({
   component: Notifications,
 });
 
-const TYPE_ICON = {
+const TYPE_ICON: Record<Notification["type"], typeof Bell> = {
   booking: CalendarCheck,
   chat_message: MessageSquare,
   review: Star,
-} as const;
+  promo: Tag,
+};
 
 function Notifications() {
   const { t } = useTranslation();

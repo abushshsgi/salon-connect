@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Map, CalendarCheck, MessageSquare, Bell, User, Heart, Settings } from "lucide-react";
+import { Home, Map, CalendarCheck, MessageSquare, Bell, User, Heart, Settings, Tag, Sparkles, Gift } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
@@ -48,19 +48,23 @@ export function DesktopSidebar() {
       </nav>
 
       <div className="mt-4 flex flex-col gap-1 border-t border-border pt-4">
-        <Link
-          to="/favorites"
-          className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface"
-        >
-          <Heart className="h-5 w-5" />
-          Sevimlilar
+        <Link to="/explore" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface">
+          <Sparkles className="h-5 w-5" /> Trendlar
         </Link>
-        <Link
-          to="/settings"
-          className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface"
-        >
-          <Settings className="h-5 w-5" />
-          Sozlamalar
+        <Link to="/offers" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface">
+          <Tag className="h-5 w-5" /> Aksiyalar
+        </Link>
+        <Link to="/loyalty" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface">
+          <Sparkles className="h-5 w-5" /> Bonus
+        </Link>
+        <Link to="/giftcard" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface">
+          <Gift className="h-5 w-5" /> Sovg'a karta
+        </Link>
+        <Link to="/favorites" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface">
+          <Heart className="h-5 w-5" /> Sevimlilar
+        </Link>
+        <Link to="/settings" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold text-foreground hover:bg-surface">
+          <Settings className="h-5 w-5" /> Sozlamalar
         </Link>
       </div>
     </aside>

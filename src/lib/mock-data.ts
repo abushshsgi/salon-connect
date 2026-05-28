@@ -1,6 +1,7 @@
-// Typed mock data for mysaloon.uz UI. Backend wires in second pass.
+// Typed mock data for mysaloon.uz UI. UI-only — no backend.
 
 export type Category = "barber" | "beauty" | "nails" | "spa";
+export type Audience = "men" | "women" | "unisex";
 
 export interface Service {
   id: string;
@@ -32,6 +33,7 @@ export interface Salon {
   id: string;
   name: string;
   category: Category;
+  audience: Audience;
   rating: number;
   reviewCount: number;
   address: string;
@@ -43,7 +45,7 @@ export interface Salon {
   services: Service[];
   staff: Barber[];
   reviews: Review[];
-  portfolio: string[]; // image seeds
+  portfolio: string[];
   lat: number;
   lng: number;
 }
@@ -80,12 +82,36 @@ export interface ChatMessage {
 
 export interface Notification {
   id: string;
-  type: "booking" | "chat_message" | "review";
+  type: "booking" | "chat_message" | "review" | "promo";
   title: string;
   body: string;
   time: string;
   read: boolean;
   link?: string;
+}
+
+export interface Offer {
+  id: string;
+  salonId: string;
+  salonName: string;
+  title: string;
+  discountPct: number;
+  validUntil: string;
+  audience: Audience;
+}
+
+export interface TrendingStyle {
+  id: string;
+  title: string;
+  audience: Audience;
+  category: Category;
+  seed: string;
+}
+
+export interface GiftCard {
+  id: string;
+  amount: number;
+  label: string;
 }
 
 const services: Service[] = [
@@ -114,6 +140,7 @@ export const salons: Salon[] = [
     id: "1",
     name: "Legacy Barbershop",
     category: "barber",
+    audience: "men",
     rating: 4.9,
     reviewCount: 248,
     address: "Amir Temur ko'chasi, 22",
@@ -133,6 +160,7 @@ export const salons: Salon[] = [
     id: "2",
     name: "Atelier Beauty",
     category: "beauty",
+    audience: "women",
     rating: 4.8,
     reviewCount: 187,
     address: "Mustaqillik ko'chasi, 15",
@@ -152,6 +180,7 @@ export const salons: Salon[] = [
     id: "3",
     name: "Studio M",
     category: "barber",
+    audience: "men",
     rating: 4.7,
     reviewCount: 132,
     address: "Shahriston, 8",
@@ -171,6 +200,7 @@ export const salons: Salon[] = [
     id: "4",
     name: "Nail House",
     category: "nails",
+    audience: "women",
     rating: 4.9,
     reviewCount: 94,
     address: "Yunusobod, 4",
@@ -185,6 +215,46 @@ export const salons: Salon[] = [
     portfolio: ["p1", "p2", "p3", "p4"],
     lat: 41.3477,
     lng: 69.2879,
+  },
+  {
+    id: "5",
+    name: "Noir Studio",
+    category: "beauty",
+    audience: "unisex",
+    rating: 4.8,
+    reviewCount: 156,
+    address: "Chilonzor, 12",
+    distanceKm: 2.0,
+    priceFrom: 80000,
+    priceTo: 320000,
+    coverSeed: "noir",
+    about: "Erkak va ayollar uchun zamonaviy uslubiy salon.",
+    services,
+    staff: barbers("5"),
+    reviews,
+    portfolio: ["p1", "p2", "p3"],
+    lat: 41.2755,
+    lng: 69.2030,
+  },
+  {
+    id: "6",
+    name: "Glow Spa",
+    category: "spa",
+    audience: "women",
+    rating: 4.9,
+    reviewCount: 78,
+    address: "Mirzo Ulug'bek, 33",
+    distanceKm: 5.2,
+    priceFrom: 150000,
+    priceTo: 600000,
+    coverSeed: "glow",
+    about: "Premium spa va parvarish markazi.",
+    services,
+    staff: barbers("6"),
+    reviews,
+    portfolio: ["p1", "p2"],
+    lat: 41.3300,
+    lng: 69.3400,
   },
 ];
 
@@ -250,7 +320,7 @@ export const chatThreads: ChatThread[] = [
 
 export const chatMessages: Record<string, ChatMessage[]> = {
   c1: [
-    { id: "m1", fromMe: false, text: "Salom! Buyurtmangizni qabul qildim.", time: "12:30" },
+    { id: "m1", fromMe: false, text: "Buyurtmangizni qabul qildim.", time: "12:30" },
     { id: "m2", fromMe: true, text: "Rahmat! Ertaga 10:00 ga to'g'rimi?", time: "12:32" },
     { id: "m3", fromMe: false, text: "Albatta, ertaga kutamiz!", time: "12:34" },
   ],
@@ -280,6 +350,15 @@ export const notifications: Notification[] = [
   },
   {
     id: "n3",
+    type: "promo",
+    title: "−20% Atelier Beauty",
+    body: "Hafta oxirigacha manikyur va styling chegirma.",
+    time: "3 soat",
+    read: false,
+    link: "/offers",
+  },
+  {
+    id: "n4",
     type: "review",
     title: "Sharhga javob",
     body: "Atelier Beauty sizning sharhingizga javob berdi.",
@@ -287,6 +366,40 @@ export const notifications: Notification[] = [
     read: true,
   },
 ];
+
+export const offers: Offer[] = [
+  { id: "of1", salonId: "1", salonName: "Legacy Barbershop", title: "Soch + soqol kombo", discountPct: 25, validUntil: "31.12", audience: "men" },
+  { id: "of2", salonId: "2", salonName: "Atelier Beauty", title: "Manikyur + dizayn", discountPct: 20, validUntil: "30.11", audience: "women" },
+  { id: "of3", salonId: "5", salonName: "Noir Studio", title: "Birinchi tashrif", discountPct: 15, validUntil: "15.12", audience: "unisex" },
+  { id: "of4", salonId: "6", salonName: "Glow Spa", title: "Yuz tozalash paketi", discountPct: 30, validUntil: "20.12", audience: "women" },
+];
+
+export const trendingStyles: TrendingStyle[] = [
+  { id: "t1", title: "Mid Fade", audience: "men", category: "barber", seed: "tr1" },
+  { id: "t2", title: "Soft Bob", audience: "women", category: "beauty", seed: "tr2" },
+  { id: "t3", title: "Buzz Cut", audience: "men", category: "barber", seed: "tr3" },
+  { id: "t4", title: "Balayage", audience: "women", category: "beauty", seed: "tr4" },
+  { id: "t5", title: "Textured Crop", audience: "men", category: "barber", seed: "tr5" },
+  { id: "t6", title: "French Manicure", audience: "women", category: "nails", seed: "tr6" },
+];
+
+export const giftCards: GiftCard[] = [
+  { id: "g1", amount: 200000, label: "Mini" },
+  { id: "g2", amount: 500000, label: "Standart" },
+  { id: "g3", amount: 1000000, label: "Premium" },
+];
+
+export const loyaltyMock = {
+  points: 1240,
+  tier: "Silver",
+  nextTier: "Gold",
+  toNext: 760,
+  perks: [
+    "Har 10 ta tashrifdan keyin 1 ta bepul",
+    "Sevimli salonlarda −10% chegirma",
+    "Yangi xizmatlarga ertaroq kirish",
+  ],
+};
 
 export const userProfile = {
   name: "Azizbek Karimov",

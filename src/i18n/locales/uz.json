@@ -38,7 +38,7 @@
       "spa": "Spa"
     }
   },
-  "map": { "salons": "Salonlar", "barbers": "Ustalar", "radius": "Radius" },
+  "map": { "salons": "Salonlar", "barbers": "Ustalar", "radius": "Radius", "search": "Salon yoki manzil" },
   "salon": {
     "tabs": {
       "about": "Haqida",

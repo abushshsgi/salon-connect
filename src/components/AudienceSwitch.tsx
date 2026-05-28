@@ -1,37 +1,49 @@
-import { Users, User as UserIcon, UserRound } from "lucide-react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useAudience, type AudienceFilter } from "@/hooks/use-audience";
 
-const OPTS: { key: AudienceFilter; icon: typeof Users; tKey: string }[] = [
-  { key: "all", icon: Users, tKey: "audience.all" },
-  { key: "men", icon: UserIcon, tKey: "audience.men" },
-  { key: "women", icon: UserRound, tKey: "audience.women" },
+const OPTS: { key: AudienceFilter; tKey: string; fallback: string }[] = [
+  { key: "all", tKey: "audience.all", fallback: "Hammasi" },
+  { key: "men", tKey: "audience.men", fallback: "Erkaklar" },
+  { key: "women", tKey: "audience.women", fallback: "Ayollar" },
 ];
 
 export function AudienceSwitch() {
   const { t } = useTranslation();
   const { audience, setAudience } = useAudience();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const activeIndex = Math.max(0, OPTS.findIndex((o) => o.key === audience));
 
   return (
-    <div className="grid grid-cols-3 gap-1 rounded-2xl bg-surface p-1">
+    <div className="relative inline-flex w-full rounded-full bg-surface p-1">
+      <motion.div
+        className="absolute inset-y-1 rounded-full bg-foreground shadow-sm"
+        initial={false}
+        animate={{
+          left: `calc(${(activeIndex / OPTS.length) * 100}% + 4px)`,
+          width: `calc(${100 / OPTS.length}% - 8px)`,
+        }}
+        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+      />
       {OPTS.map((o) => {
         const active = audience === o.key;
-        const Icon = o.icon;
         return (
           <button
             key={o.key}
             onClick={() => setAudience(o.key)}
             className={cn(
-              "flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-[12px] font-bold tracking-wide transition-all",
-              active
-                ? "bg-foreground text-background shadow-sm"
-                : "text-muted-foreground active:scale-95",
+              "relative z-10 flex-1 rounded-full py-2.5 text-[12px] font-bold tracking-wide transition-colors",
+              active ? "text-background" : "text-foreground/70 active:text-foreground",
             )}
             aria-pressed={active}
           >
-            <Icon className="h-3.5 w-3.5" strokeWidth={2.4} />
-            {t(o.tKey)}
+            <span suppressHydrationWarning>
+              {mounted ? t(o.tKey) : o.fallback}
+            </span>
           </button>
         );
       })}

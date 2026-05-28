@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   title?: string;
+  subtitle?: string;
   showBack?: boolean;
   right?: React.ReactNode;
   sticky?: boolean;
   transparent?: boolean;
 }
 
-export function PageHeader({ title, showBack, right, sticky, transparent }: Props) {
+export function PageHeader({ title, subtitle, showBack, right, sticky, transparent }: Props) {
   const router = useRouter();
   return (
     <header
@@ -31,7 +32,16 @@ export function PageHeader({ title, showBack, right, sticky, transparent }: Prop
             <ChevronLeft className="h-5 w-5" strokeWidth={2.4} />
           </button>
         )}
-        {title && <h1 className="text-xl font-bold tracking-tight">{title}</h1>}
+        {(title || subtitle) && (
+          <div>
+            {title && <h1 className="text-xl font-bold tracking-tight leading-tight">{title}</h1>}
+            {subtitle && (
+              <p className="mt-0.5 text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2">{right}</div>
     </header>

@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TodayRouteImport } from './routes/today'
 import { Route as SupportRouteImport } from './routes/support'
+import { Route as StylistsRouteImport } from './routes/stylists'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -29,9 +31,19 @@ import { Route as ChatIdRouteImport } from './routes/chat.$id'
 import { Route as BookingSalonIdRouteImport } from './routes/booking.$salonId'
 import { Route as BookingBarberBarberIdRouteImport } from './routes/booking.barber.$barberId'
 
+const TodayRoute = TodayRouteImport.update({
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StylistsRoute = StylistsRouteImport.update({
+  id: '/stylists',
+  path: '/stylists',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -140,7 +152,9 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
+  '/stylists': typeof StylistsRoute
   '/support': typeof SupportRoute
+  '/today': typeof TodayRoute
   '/booking/$salonId': typeof BookingSalonIdRoute
   '/chat/$id': typeof ChatIdRoute
   '/salon/$id': typeof SalonIdRoute
@@ -161,7 +175,9 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
+  '/stylists': typeof StylistsRoute
   '/support': typeof SupportRoute
+  '/today': typeof TodayRoute
   '/booking/$salonId': typeof BookingSalonIdRoute
   '/chat/$id': typeof ChatIdRoute
   '/salon/$id': typeof SalonIdRoute
@@ -183,7 +199,9 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/profile': typeof ProfileRoute
   '/settings': typeof SettingsRoute
+  '/stylists': typeof StylistsRoute
   '/support': typeof SupportRoute
+  '/today': typeof TodayRoute
   '/booking/$salonId': typeof BookingSalonIdRoute
   '/chat/$id': typeof ChatIdRoute
   '/salon/$id': typeof SalonIdRoute
@@ -206,7 +224,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/profile'
     | '/settings'
+    | '/stylists'
     | '/support'
+    | '/today'
     | '/booking/$salonId'
     | '/chat/$id'
     | '/salon/$id'
@@ -227,7 +247,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/profile'
     | '/settings'
+    | '/stylists'
     | '/support'
+    | '/today'
     | '/booking/$salonId'
     | '/chat/$id'
     | '/salon/$id'
@@ -248,7 +270,9 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/profile'
     | '/settings'
+    | '/stylists'
     | '/support'
+    | '/today'
     | '/booking/$salonId'
     | '/chat/$id'
     | '/salon/$id'
@@ -270,7 +294,9 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ProfileRoute: typeof ProfileRoute
   SettingsRoute: typeof SettingsRoute
+  StylistsRoute: typeof StylistsRoute
   SupportRoute: typeof SupportRoute
+  TodayRoute: typeof TodayRoute
   BookingSalonIdRoute: typeof BookingSalonIdRoute
   SalonIdRoute: typeof SalonIdRoute
   BookingBarberBarberIdRoute: typeof BookingBarberBarberIdRoute
@@ -278,11 +304,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/today': {
+      id: '/today'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/support': {
       id: '/support'
       path: '/support'
       fullPath: '/support'
       preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stylists': {
+      id: '/stylists'
+      path: '/stylists'
+      fullPath: '/stylists'
+      preLoaderRoute: typeof StylistsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -439,7 +479,9 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ProfileRoute: ProfileRoute,
   SettingsRoute: SettingsRoute,
+  StylistsRoute: StylistsRoute,
   SupportRoute: SupportRoute,
+  TodayRoute: TodayRoute,
   BookingSalonIdRoute: BookingSalonIdRoute,
   SalonIdRoute: SalonIdRoute,
   BookingBarberBarberIdRoute: BookingBarberBarberIdRoute,
@@ -447,3 +489,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

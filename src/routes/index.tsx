@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, ChevronRight, Bell, Sparkles, Tag, Gift } from "lucide-react";
+import { Search, ChevronRight, Bell, Sparkles, Tag, Gift, Award, Flame } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { salons, notifications, trendingStyles, offers } from "@/lib/mock-data";
 import type { Category } from "@/lib/mock-data";

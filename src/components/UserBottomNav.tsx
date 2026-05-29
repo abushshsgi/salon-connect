@@ -37,7 +37,7 @@ export function UserBottomNav({ unreadCount = 2 }: Props) {
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const active = isActive(tab.to);
-          const showBadge = tab.key === "notifications" && unreadCount > 0;
+          const showBadge = tab.key === "today" && unreadCount > 0;
           return (
             <Link
               key={tab.to}

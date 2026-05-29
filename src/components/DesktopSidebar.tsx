@@ -41,7 +41,7 @@ export function DesktopSidebar() {
               )}
             >
               <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 2} />
-              {t(`nav.${tab.key}`)}
+              <span suppressHydrationWarning>{t(`nav.${tab.key}`)}</span>
             </Link>
           );
         })}

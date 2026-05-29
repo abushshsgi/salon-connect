@@ -131,6 +131,20 @@ function Home() {
       {/* Quick actions */}
       <section className="mt-6 grid grid-cols-3 gap-2 px-5">
         <Link
+          to="/today"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-foreground p-3 text-background active:scale-[0.97] transition-transform"
+        >
+          <Flame className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Bugungi vaqtlar</span>
+        </Link>
+        <Link
+          to="/stylists"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <Award className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Top ustalar</span>
+        </Link>
+        <Link
           to="/explore"
           className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
         >
@@ -150,6 +164,13 @@ function Home() {
         >
           <Gift className="h-4 w-4" strokeWidth={2.4} />
           <span className="text-[11px] font-bold leading-tight">Sovg'a karta</span>
+        </Link>
+        <Link
+          to="/notifications"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <Bell className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Xabarlar</span>
         </Link>
       </section>
 

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, ChevronRight, Bell, Sparkles, Tag, Gift, Award, Flame } from "lucide-react";
+import { Search, ChevronRight, Bell, Sparkles, Tag, Gift, Award, Flame, GitCompareArrows } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { salons, notifications, trendingStyles, offers } from "@/lib/mock-data";
 import type { Category } from "@/lib/mock-data";
@@ -164,6 +164,13 @@ function Home() {
         >
           <Gift className="h-4 w-4" strokeWidth={2.4} />
           <span className="text-[11px] font-bold leading-tight">Sovg'a karta</span>
+        </Link>
+        <Link
+          to="/compare"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <GitCompareArrows className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Taqqoslash</span>
         </Link>
         <Link
           to="/notifications"

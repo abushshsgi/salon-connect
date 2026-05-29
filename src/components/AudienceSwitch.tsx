@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useAudience, type AudienceFilter } from "@/hooks/use-audience";
@@ -16,30 +15,26 @@ export function AudienceSwitch() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const activeIndex = Math.max(0, OPTS.findIndex((o) => o.key === audience));
-
   return (
-    <div className="relative inline-flex w-full rounded-full bg-surface p-1">
-      <motion.div
-        className="absolute inset-y-1 rounded-full bg-foreground shadow-sm"
-        initial={false}
-        animate={{
-          left: `calc(${(activeIndex / OPTS.length) * 100}% + 4px)`,
-          width: `calc(${100 / OPTS.length}% - 8px)`,
-        }}
-        transition={{ type: "spring", stiffness: 380, damping: 32 }}
-      />
+    <div
+      className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5"
+      role="tablist"
+      aria-label="Audience filter"
+    >
       {OPTS.map((o) => {
         const active = audience === o.key;
         return (
           <button
             key={o.key}
+            role="tab"
+            aria-selected={active}
             onClick={() => setAudience(o.key)}
             className={cn(
-              "relative z-10 flex-1 rounded-full py-2.5 text-[12px] font-bold tracking-wide transition-colors",
-              active ? "text-background" : "text-foreground/70 active:text-foreground",
+              "shrink-0 rounded-full border px-4 py-2 text-[12px] font-bold tracking-wide transition-colors",
+              active
+                ? "border-foreground bg-foreground text-background"
+                : "border-border bg-background text-foreground/70 hover:text-foreground",
             )}
-            aria-pressed={active}
           >
             <span suppressHydrationWarning>
               {mounted ? t(o.tKey) : o.fallback}

@@ -63,6 +63,7 @@ export function UserBottomNav({ unreadCount = 2 }: Props) {
                   "text-[10px] font-bold tracking-wide",
                   active ? "text-foreground" : "text-muted-foreground",
                 )}
+                suppressHydrationWarning
               >
                 {t(`nav.${tab.key}`)}
               </span>

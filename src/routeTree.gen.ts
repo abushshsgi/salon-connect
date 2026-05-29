@@ -22,6 +22,7 @@ import { Route as LoyaltyRouteImport } from './routes/loyalty'
 import { Route as GiftcardRouteImport } from './routes/giftcard'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -96,6 +97,11 @@ const ExploreRoute = ExploreRouteImport.update({
   path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',
   path: '/chat',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
   '/chat': typeof ChatRouteWithChildren
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/favorites': typeof FavoritesRoute
   '/giftcard': typeof GiftcardRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
   '/chat': typeof ChatRouteWithChildren
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/favorites': typeof FavoritesRoute
   '/giftcard': typeof GiftcardRoute
@@ -189,6 +197,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
   '/chat': typeof ChatRouteWithChildren
+  '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/favorites': typeof FavoritesRoute
   '/giftcard': typeof GiftcardRoute
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bookings'
     | '/chat'
+    | '/compare'
     | '/explore'
     | '/favorites'
     | '/giftcard'
@@ -237,6 +247,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bookings'
     | '/chat'
+    | '/compare'
     | '/explore'
     | '/favorites'
     | '/giftcard'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bookings'
     | '/chat'
+    | '/compare'
     | '/explore'
     | '/favorites'
     | '/giftcard'
@@ -284,6 +296,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BookingsRoute: typeof BookingsRoute
   ChatRoute: typeof ChatRouteWithChildren
+  CompareRoute: typeof CompareRoute
   ExploreRoute: typeof ExploreRoute
   FavoritesRoute: typeof FavoritesRoute
   GiftcardRoute: typeof GiftcardRoute
@@ -395,6 +408,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat': {
       id: '/chat'
       path: '/chat'
@@ -469,6 +489,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BookingsRoute: BookingsRoute,
   ChatRoute: ChatRouteWithChildren,
+  CompareRoute: CompareRoute,
   ExploreRoute: ExploreRoute,
   FavoritesRoute: FavoritesRoute,
   GiftcardRoute: GiftcardRoute,

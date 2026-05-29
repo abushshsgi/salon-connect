@@ -1,14 +1,14 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Map, CalendarCheck, MessageSquare, Bell, User } from "lucide-react";
+import { Home, Map, CalendarCheck, MessageSquare, Flame, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 const tabs = [
   { to: "/", icon: Home, key: "home" },
   { to: "/map", icon: Map, key: "map" },
+  { to: "/today", icon: Flame, key: "today" },
   { to: "/bookings", icon: CalendarCheck, key: "bookings" },
   { to: "/chat", icon: MessageSquare, key: "chat" },
-  { to: "/notifications", icon: Bell, key: "notifications" },
   { to: "/profile", icon: User, key: "profile" },
 ] as const;
 

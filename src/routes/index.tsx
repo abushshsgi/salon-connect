@@ -166,6 +166,13 @@ function Home() {
           <span className="text-[11px] font-bold leading-tight">Sovg'a karta</span>
         </Link>
         <Link
+          to="/compare"
+          className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
+        >
+          <GitCompareArrows className="h-4 w-4" strokeWidth={2.4} />
+          <span className="text-[11px] font-bold leading-tight">Taqqoslash</span>
+        </Link>
+        <Link
           to="/notifications"
           className="flex flex-col items-start gap-1 rounded-2xl bg-surface p-3 active:scale-[0.97] transition-transform"
         >
